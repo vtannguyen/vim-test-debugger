@@ -3,7 +3,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 " }}}
 
-function! test_debugger#InstallConfiguration()
+function! test_debugger#AddVimspectorConfigurations()
     if !exists('g:vimspector_home')
         let vimspector_home = g:vimspector_home
     else
@@ -23,6 +23,12 @@ function! test_debugger#InstallConfiguration()
     let final_dir = os_config_dir . "/python"
     call mkdir(final_dir, "p")
     let res = system('cp ' . g:vim_test_debugger_home . '/vim-test-debugger.json ' . final_dir)
+endfunction
+
+function! test_debugger#DebugTest(cmd)
+    let pytest_args = getcwd() . '/' . split(a:cmd)[1]
+    let pytest_location = system('which pytest | tr -d "\n"')
+    call vimspector#LaunchWithSettings({ 'configuration': 'debug pytest', 'PYTEST_ARGS': pytest_args, 'PYTEST_LOCATION': pytest_location })
 endfunction
 
 " Boilerplate {{{

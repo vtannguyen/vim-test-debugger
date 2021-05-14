@@ -1,11 +1,29 @@
-let g:vim_test_debugger_home=expand('<sfile>:p:h:h')
+" Boilerplate {{{
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! DebugTest(cmd)
-    echo 'It works! Command for running tests: ' . a:cmd
-    let pytest_args = getcwd() . '/' . split(a:cmd)[1]
-    let pytest_location = system('which pytest | tr -d "\n"')
-    call vimspector#LaunchWithSettings({ 'configuration': 'debug pytest', 'PYTEST_ARGS': pytest_args, 'PYTEST_LOCATION': pytest_location })
+function! s:restore_cpo()
+  let &cpo = s:save_cpo
+  unlet s:save_cpo
 endfunction
 
-let g:test#custom_strategies = {'vimspector': function('DebugTest')}
+if exists( 'g:loaded_vim_test_debugger' )
+  call s:restore_cpo()
+  finish
+endif
+" }}}
+
+let g:loaded_vim_test_debugger=1
+let g:vim_test_debugger_home=expand('<sfile>:p:h:h')
+
+if exists('g:test#custom_strategies')
+    let test#custom_strategies.vimspector = function('test_debugger#DebugTest')
+else
+    let g:test#custom_strategies = {'vimspector': function('test_debugger#DebugTest')}
+endif
+
 let g:test#strategy = 'vimspector'
+
+" Boilerplate {{{
+call s:restore_cpo()
+" }}}
