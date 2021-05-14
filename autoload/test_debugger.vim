@@ -11,6 +11,7 @@ function! test_debugger#AddVimspectorConfigurations()
     endif
     if !isdirectory(vimspector_home)
         echo "It seems the vim plugin vimspector is not installed. Please install it first."
+        return
     endif
     let config_dir = vimspector_home . '/configurations/'
     let os_config_dir = ''
@@ -29,6 +30,29 @@ function! test_debugger#DebugTest(cmd)
     let pytest_args = getcwd() . '/' . split(a:cmd)[1]
     let pytest_location = system('which pytest | tr -d "\n"')
     call vimspector#LaunchWithSettings({ 'configuration': 'debug pytest', 'PYTEST_ARGS': pytest_args, 'PYTEST_LOCATION': pytest_location })
+endfunction
+
+function! test_debugger#DebugModeEnable()
+    if !g:enable_vim_test_debugger
+        let g:enable_vim_test_debugger = 1
+        let s:save_stategy = g:test#strategy
+        let g:test#strategy = 'vimspector'
+    endif
+endfunction
+
+function! test_debugger#DebugModeDisable()
+    if g:enable_vim_test_debugger
+        let g:enable_vim_test_debugger = 0
+        let g:test#strategy = s:save_stategy
+    endif
+endfunction
+
+function! test_debugger#DebugModeToggle()
+    if g:enable_vim_test_debugger
+        call test_debugger#DebugModeDisable()
+    else
+        call test_debugger#DebugModeEnable()
+    endif
 endfunction
 
 " Boilerplate {{{
