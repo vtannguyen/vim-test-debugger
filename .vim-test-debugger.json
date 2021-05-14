@@ -1,14 +1,14 @@
 {// This file was added by vim test debugger
   "$schema": "https://puremourning.github.io/vimspector/schema/vimspector.schema.json",
   "configurations": {
-    "debug pytest": {
+    "debug python": {
       "adapter": "debugpy",
       "configuration": {
         "request": "launch",
         "type": "python",
         "cwd": "${workspaceRoot}",
-        "program": "${PYTEST_LOCATION}",
-        "args": ["${PYTEST_ARGS}"],
+        "program": "${TEST_BINARY_PATH}",
+        "args": ["${TEST_OBJECT}"],
         "stopOnEntry": false,
         "console": "integratedTerminal"
       },
