@@ -7,10 +7,12 @@ function! test_debugger#AddVimspectorConfigurations()
     if exists('g:vimspector_home')
         let vimspector_home = g:vimspector_home
     else
-        let vimspector_home = fnamemodify(g:vim_test_debugger_home . '/../vimspector', ':p')
+        let vimspector_home = fnamemodify(
+                    \ g:vim_test_debugger_home . '/../vimspector', ':p')
     endif
     if !isdirectory(vimspector_home)
-        echo "It seems the vim plugin vimspector is not installed. Please install it first."
+        echo "It seems the vim plugin vimspector is not installed. 
+                    \ Please install it first."
         return
     endif
     let config_dir = vimspector_home . '/configurations/'
@@ -24,7 +26,9 @@ function! test_debugger#AddVimspectorConfigurations()
     for file_type in g:test_debugger#supported_filetypes
         let final_dir = os_config_dir . "/" . file_type
         call mkdir(final_dir, "p")
-        let res = system('cp ' . g:vim_test_debugger_home . '/configurations/vim-test-debugger-' . file_type . '.json ' . final_dir)
+        let res = system('cp ' . g:vim_test_debugger_home . 
+                             \ '/configurations/vim-test-debugger-' . 
+                             \ file_type . '.json ' . final_dir)
     endfor
 endfunction
 

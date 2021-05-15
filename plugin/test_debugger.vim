@@ -27,13 +27,15 @@ endif
 if exists('g:test#custom_strategies')
     let test#custom_strategies.vimspector = function('test_debugger#DebugTest')
 else
-    let g:test#custom_strategies = {'vimspector': function('test_debugger#DebugTest')}
+    let g:test#custom_strategies = {
+                \ 'vimspector': function('test_debugger#DebugTest')}
 endif
 " }}}
 
 " Set up fallback in case filetype is not supported yet {{{
 function s:DebugTestFallback() abort
-    echo 'Sorry the current filetype ' . &filetype . ' is currently not supported yet.'
+    echo 'Sorry the current filetype ' . &filetype . 
+                \ ' is currently not supported yet.'
 endfunction
 
 autocmd BufRead,BufNewFile *
