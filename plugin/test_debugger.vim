@@ -15,6 +15,7 @@ endif
 
 let g:loaded_vim_test_debugger=1
 let g:vim_test_debugger_home=expand('<sfile>:p:h:h')
+let g:test_debugger#supported_filetypes = ["python"]
 
 " User configurable variables {{{
 if !exists('g:enable_vim_test_debugger')

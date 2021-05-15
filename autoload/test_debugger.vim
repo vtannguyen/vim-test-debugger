@@ -4,7 +4,7 @@ set cpo&vim
 " }}}
 
 function! test_debugger#AddVimspectorConfigurations()
-    if !exists('g:vimspector_home')
+    if exists('g:vimspector_home')
         let vimspector_home = g:vimspector_home
     else
         let vimspector_home = fnamemodify(g:vim_test_debugger_home . '/../vimspector', ':p')
@@ -21,9 +21,11 @@ function! test_debugger#AddVimspectorConfigurations()
             break
         endif
     endfor
-    let final_dir = os_config_dir . "/python"
-    call mkdir(final_dir, "p")
-    let res = system('cp ' . g:vim_test_debugger_home . '/vim-test-debugger.json ' . final_dir)
+    for file_type in g:test_debugger#supported_filetypes
+        let final_dir = os_config_dir . "/" . file_type
+        call mkdir(final_dir, "p")
+        let res = system('cp ' . g:vim_test_debugger_home . '/configurations/vim-test-debugger-' . file_type . '.json ' . final_dir)
+    endfor
 endfunction
 
 function! test_debugger#DebugModeEnable()
