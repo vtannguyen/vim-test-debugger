@@ -39,7 +39,7 @@ To toggle enable/disable of the plugin, please run:
 ```
 You could also make vim-test-debugger enable by default by setting in your vimrc:
 ```
-let g:enable_vim_test_debugger = 1
+let g:test#strategy = 'vimspector'
 ```
 
 ## License
