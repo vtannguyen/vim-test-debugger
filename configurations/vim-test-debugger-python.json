@@ -6,7 +6,7 @@
       "configuration": {
         "request": "launch",
         "type": "python",
-        "cwd": "${workspaceRoot}",
+        "cwd": "${WORK_DIR}",
         "program": "${TEST_BINARY_PATH}",
         "args": ["${TEST_OBJECT}"],
         "stopOnEntry": false,
