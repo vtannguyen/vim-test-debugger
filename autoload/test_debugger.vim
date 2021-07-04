@@ -16,7 +16,8 @@ function! test_debugger#AddVimspectorConfigurations()
         return
     endif
     let config_dir = vimspector_home . '/configurations/'
-    let os_config_dir = ''
+    call mkdir(config_dir, "p")
+    let os_config_dir = config_dir . '/linux'
     for path in split(globpath(config_dir, '*'), '\n')
         if isdirectory(path)
             let os_config_dir = path
